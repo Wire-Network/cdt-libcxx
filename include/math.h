@@ -308,7 +308,7 @@ extern "C++" {
 
 #include <type_traits>
 #include <limits>
-
+   /*
 // signbit
 
 #ifdef signbit
@@ -1481,7 +1481,7 @@ template <class _A1>
 inline _LIBCPP_INLINE_VISIBILITY
 typename std::enable_if<std::is_integral<_A1>::value, double>::type
 trunc(_A1 __lcpp_x) _NOEXCEPT {return ::trunc((double)__lcpp_x);}
-
+*/
 } // extern "C++"
 
 #endif // __cplusplus

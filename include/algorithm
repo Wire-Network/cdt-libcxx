@@ -3132,7 +3132,7 @@ uniform_int_distribution<_IntType>::operator()(_URNG& __g, const param_type& __p
     } while (__u >= _Rp);
     return static_cast<result_type>(__u + __p.a());
 }
-
+/*
 #if _LIBCPP_STD_VER <= 14 || defined(_LIBCPP_ENABLE_CXX17_REMOVED_RANDOM_SHUFFLE) \
   || defined(_LIBCPP_BUILDING_LIBRARY)
 class _LIBCPP_TYPE_VIS __rs_default;
@@ -3205,7 +3205,7 @@ random_shuffle(_RandomAccessIterator __first, _RandomAccessIterator __last,
     }
 }
 #endif
-
+*/
 template <class _PopulationIterator, class _SampleIterator, class _Distance,
           class _UniformRandomNumberGenerator>
 _LIBCPP_INLINE_VISIBILITY
