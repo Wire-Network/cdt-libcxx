@@ -2,23 +2,32 @@
 
 #include <cstdio>
 #include <type_traits>
-/*
-template<class T> T __sync_fetch_and_add(T* ptr, T val) {
-   T old = *ptr;
-   *ptr += typename std::conditional<std::is_pointer<T>::value, size_t, T>::type( val );
+
+/**
+ * Implimentation for compiler builtin functions. Theoretically Clang should
+ * generate inline code for calls to these functions. And the generated code should
+ * not contain any synchronization beacause WebAssembly doesn't support multithreading.
+ * Instead of that Clang complains that it was unable to find atomic instructions.
+ * So, this file contains a workaround.
+ * The builtins can be used with any types. But this file contains nly functions needed
+ * for libc++.
+ */
+
+inline int __sync_lock_test_and_set( int* ptr, int val ) {
+   auto old = *ptr;
+   *ptr = val;
    return old;
 }
 
-template<class T> T __sync_add_and_fetch(T* ptr, T val) {
-   return ptr += typename std::conditional<std::is_pointer<T>::value, size_t, T>::type( val );
-}
-
-template<class T> T __sync_lock_test_and_set(T* ptr, T val) {
-   T old = *ptr;
-   *ptr = typename std::conditional<std::is_pointer<T>::value, size_t, T>::type( val );
+inline int __sync_fetch_and_add( int* ptr, int val ) {
+   auto old = *ptr;
+   *ptr += val;
    return old;
 }
-*/
+
+inline int __sync_add_and_fetch( int* ptr, int val ) {
+   return *ptr += val;
+}
 
 inline int32_t __sync_lock_test_and_set( int32_t* ptr, int32_t val ) {
    auto old = *ptr;
