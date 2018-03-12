@@ -8,6 +8,8 @@
 //
 //===----------------------------------------------------------------------===//
 
+#include <builtins.hpp>
+
 namespace std {
 
 _LIBCPP_SAFE_STATIC static std::new_handler __new_handler;
