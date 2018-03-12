@@ -38,6 +38,7 @@
 #include <stdio.h>
 #include "__undef_macros"
 
+#include <builtins.hpp>
 
 // On Linux, wint_t and wchar_t have different signed-ness, and this causes
 // lots of noise in the build log, but no bugs that I know of. 
@@ -665,12 +666,11 @@ locale::id::__get()
     return __id_ - 1;
 }
 
-#include <builtins.hpp>
 
 void
 locale::id::__init()
 {
-   __id_ = __sync_add_and_fetch(&__next_id, 1);
+    __id_ = __sync_add_and_fetch(&__next_id, 1);
 }
 
 // template <> class collate_byname<char>
