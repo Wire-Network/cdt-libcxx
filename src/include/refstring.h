@@ -19,8 +19,6 @@
 #include <mach-o/dyld.h>
 #endif
 
-#include <builtins.hpp>
-
 _LIBCPP_BEGIN_NAMESPACE_STD
 
 namespace __refstring_imp { namespace {
