@@ -65,46 +65,12 @@ constexpr size_t strerror_buff_size = 1024;
 
 string do_strerror_r(int ev);
 
-#if defined(_LIBCPP_MSVCRT_LIKE)
-string do_strerror_r(int ev) {
-  char buffer[strerror_buff_size];
-  if (::strerror_s(buffer, strerror_buff_size, ev) == 0)
-    return string(buffer);
-  std::snprintf(buffer, strerror_buff_size, "unknown error %d", ev);
-  return string(buffer);
-}
-#elif defined(__linux__) && !defined(_LIBCPP_HAS_MUSL_LIBC) &&                 \
-    (!defined(__ANDROID__) || __ANDROID_API__ >= 23)
 // GNU Extended version
 string do_strerror_r(int ev) {
-    char buffer[strerror_buff_size];
-    char* ret = ::strerror_r(ev, buffer, strerror_buff_size);
-    return string(ret);
+    string buff(strerror_buff_size, '\0');
+    char* ret = ::strerror_r(ev, (char*)buff.c_str(), strerror_buff_size);
+    return buff;
 }
-#else
-// POSIX version
-string do_strerror_r(int ev) {
-    char buffer[strerror_buff_size];
-    const int old_errno = errno;
-    int ret;
-    if ((ret = ::strerror_r(ev, buffer, strerror_buff_size)) != 0) {
-        // If `ret == -1` then the error is specified using `errno`, otherwise
-        // `ret` represents the error.
-        const int new_errno = ret == -1 ? errno : ret;
-        errno = old_errno;
-        if (new_errno == EINVAL) {
-            std::snprintf(buffer, strerror_buff_size, "Unknown error %d", ev);
-            return string(buffer);
-        } else {
-            _LIBCPP_ASSERT(new_errno == ERANGE, "unexpected error from ::strerr_r");
-            // FIXME maybe? 'strerror_buff_size' is likely to exceed the
-            // maximum error size so ERANGE shouldn't be returned.
-            std::abort();
-        }
-    }
-    return string(buffer);
-}
-#endif
 
 } // end namespace
 #endif
