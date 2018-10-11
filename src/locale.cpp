@@ -38,13 +38,15 @@
 #include <stdio.h>
 #include "__undef_macros"
 
-#include <builtins.hpp>
-
 // On Linux, wint_t and wchar_t have different signed-ness, and this causes
 // lots of noise in the build log, but no bugs that I know of. 
 #if defined(__clang__)
 #pragma clang diagnostic ignored "-Wsign-conversion"
 #endif
+
+extern "C" void eosio_assert(bool, const char*);
+size_t strftime(char*, size_t, const char*, const struct tm*) { eosio_assert(false, "strftime called"); }
+size_t strftime_l(char*, size_t, const char*, const struct tm*, locale_t) { eosio_assert(false, "strftime_l called"); }
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 

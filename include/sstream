@@ -11,6 +11,7 @@
 #ifndef _LIBCPP_SSTREAM
 #define _LIBCPP_SSTREAM
 
+#warning "std::stringstream will greatly increase contract size"
 /*
     sstream synopsis
 

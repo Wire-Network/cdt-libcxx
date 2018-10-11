@@ -9,12 +9,13 @@
 //===----------------------------------------------------------------------===//
 
 #include <cstdio>
-#include <builtins.hpp>
 
 namespace std {
 
+typedef void (*unexpected_handler)();
+
 _LIBCPP_SAFE_STATIC static std::terminate_handler  __terminate_handler;
-_LIBCPP_SAFE_STATIC static std::unexpected_handler __unexpected_handler;
+_LIBCPP_SAFE_STATIC static unexpected_handler __unexpected_handler;
 
 
 // libcxxrt provides implementations of these functions itself.
