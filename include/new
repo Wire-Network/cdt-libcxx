@@ -10,7 +10,13 @@
 
 #ifndef _LIBCPP_NEW
 #define _LIBCPP_NEW
-
+/*
+#ifdef EOSIO_NATIVE
+typedef unsigned long std::size_t;
+#else
+typedef unsigned int std::size_t;
+#endif
+*/
 /*
     new synopsis
 
@@ -39,7 +45,7 @@ public:
     bad_array_new_length() noexcept;
 };
 
-enum class align_val_t : size_t {}; // C++17
+enum class align_val_t : std::size_t {}; // C++17
 struct nothrow_t {};
 extern const nothrow_t nothrow;
 typedef void (*new_handler)();
@@ -219,7 +225,7 @@ inline _LIBCPP_INLINE_VISIBILITY void  operator delete[](void*, void*) _NOEXCEPT
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 
-inline _LIBCPP_INLINE_VISIBILITY void *__allocate(size_t __size) {
+inline _LIBCPP_INLINE_VISIBILITY void *__allocate(std::size_t __size) {
 #ifdef _LIBCPP_HAS_NO_BUILTIN_OPERATOR_NEW_DELETE
   return ::operator new(__size);
 #else
