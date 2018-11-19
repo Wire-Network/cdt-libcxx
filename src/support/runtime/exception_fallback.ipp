@@ -78,6 +78,7 @@ terminate() _NOEXCEPT
 }
 #endif // !__EMSCRIPTEN__
 
+#if 0
 #if !defined(__EMSCRIPTEN__)
 bool uncaught_exception() _NOEXCEPT { return uncaught_exceptions() > 0; }
 
@@ -88,6 +89,7 @@ int uncaught_exceptions() _NOEXCEPT
   ::abort();
 }
 #endif // !__EMSCRIPTEN__
+#endif
 
 
 exception::~exception() _NOEXCEPT

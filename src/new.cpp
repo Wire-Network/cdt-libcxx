@@ -23,11 +23,11 @@
 #elif defined(__GLIBCXX__)
 // nothing todo
 #else
-# if defined(__APPLE__) && !defined(_LIBCPP_BUILDING_HAS_NO_ABI_LIBRARY)
-#   include <cxxabi.h> // FIXME: remove this once buildit is gone.
-# else
-#   include "support/runtime/new_handler_fallback.ipp"
-# endif
+//# if defined(__APPLE__) && !defined(_LIBCPP_BUILDING_HAS_NO_ABI_LIBRARY)
+//#   include <cxxabi.h> // FIXME: remove this once buildit is gone.
+//# else
+#include "support/runtime/new_handler_fallback.ipp"
+//# endif
 #endif
 
 namespace std
@@ -173,6 +173,10 @@ operator delete[] (void* ptr, size_t) _NOEXCEPT
 }
 
 #if !defined(_LIBCPP_HAS_NO_ALIGNED_ALLOCATIONS)
+
+#ifdef __APPLE__
+int posix_memalign(void **memptr, size_t alignment, size_t size);
+#endif
 
 _LIBCPP_WEAK
 void *

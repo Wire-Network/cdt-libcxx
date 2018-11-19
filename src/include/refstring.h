@@ -15,8 +15,8 @@
 #include <cstddef>
 #include <cstring>
 #ifdef __APPLE__
-#include <dlfcn.h>
-#include <mach-o/dyld.h>
+#include "dlfcn.h"
+#include "dyld.h"
 #endif
 
 _LIBCPP_BEGIN_NAMESPACE_STD
