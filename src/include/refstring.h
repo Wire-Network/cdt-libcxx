@@ -1,9 +1,8 @@
 //===------------------------ __refstring ---------------------------------===//
 //
-//                     The LLVM Compiler Infrastructure
-//
-// This file is dual licensed under the MIT and the University of Illinois Open
-// Source Licenses. See LICENSE.TXT for details.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
 //===----------------------------------------------------------------------===//
 
@@ -14,12 +13,6 @@
 #include <stdexcept>
 #include <cstddef>
 #include <cstring>
-/*
-#ifdef __APPLE__
-#include "dlfcn.h"
-#include "dyld.h"
-#endif
-*/
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 
@@ -87,7 +80,7 @@ __libcpp_refstring::__libcpp_refstring(const __libcpp_refstring &s) _NOEXCEPT
     : __imp_(s.__imp_)
 {
     if (__uses_refcount())
-        __sync_add_and_fetch(&rep_from_data(__imp_)->count, 1);
+        __libcpp_atomic_add(&rep_from_data(__imp_)->count, 1);
 }
 
 inline
@@ -96,10 +89,10 @@ __libcpp_refstring& __libcpp_refstring::operator=(__libcpp_refstring const& s) _
     struct _Rep_base *old_rep = rep_from_data(__imp_);
     __imp_ = s.__imp_;
     if (__uses_refcount())
-        __sync_add_and_fetch(&rep_from_data(__imp_)->count, 1);
+        __libcpp_atomic_add(&rep_from_data(__imp_)->count, 1);
     if (adjust_old_count)
     {
-        if (__sync_add_and_fetch(&old_rep->count, count_t(-1)) < 0)
+        if (__libcpp_atomic_add(&old_rep->count, count_t(-1)) < 0)
         {
             ::operator delete(old_rep);
         }
@@ -111,7 +104,7 @@ inline
 __libcpp_refstring::~__libcpp_refstring() {
     if (__uses_refcount()) {
         _Rep_base* rep = rep_from_data(__imp_);
-        if (__sync_add_and_fetch(&rep->count, count_t(-1)) < 0) {
+        if (__libcpp_atomic_add(&rep->count, count_t(-1)) < 0) {
             ::operator delete(rep);
         }
     }
