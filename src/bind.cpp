@@ -12,7 +12,6 @@ _LIBCPP_BEGIN_NAMESPACE_STD
 
 namespace placeholders
 {
-
 const __ph<1>   _1{};
 const __ph<2>   _2{};
 const __ph<3>   _3{};

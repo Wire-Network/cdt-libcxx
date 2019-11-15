@@ -18,7 +18,9 @@
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 
+#if defined(_LIBCPP_CXX03_LANG) || defined(_LIBCPP_BUILDING_LIBRARY)
 const allocator_arg_t allocator_arg = allocator_arg_t();
+#endif
 
 bad_weak_ptr::~bad_weak_ptr() _NOEXCEPT {}
 
