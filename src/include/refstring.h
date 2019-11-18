@@ -14,6 +14,12 @@
 #include <cstddef>
 #include <cstring>
 
+template <typename T>
+inline T __libcpp_atomic_add(T* p, T o) {
+   *p += o;
+   return *p;
+}
+
 _LIBCPP_BEGIN_NAMESPACE_STD
 
 namespace __refstring_imp { namespace {
