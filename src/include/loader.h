@@ -1158,7 +1158,7 @@ struct load_command {
 #define	LC_DYLD_INFO_ONLY (0x22|LC_REQ_DYLD)	/* compressed dyld information only */
 #define	LC_LOAD_UPWARD_DYLIB (0x23 | LC_REQ_DYLD) /* load upward dylib */
 #define LC_VERSION_MIN_MACOSX 0x24   /* build for MacOSX min OS version */
-#define LC_VERSION_MIN_IPHONSYS 0x25 /* build for iPhoneOS min OS version */
+#define LC_VERSION_MIN_IPHONEOS 0x25 /* build for iPhoneOS min OS version */
 #define LC_FUNCTION_STARTS 0x26 /* compressed table of function start addresses */
 
 /*
@@ -2041,7 +2041,7 @@ struct encryption_info_command {
  */
 struct version_min_command {
     uint32_t	cmd;		/* LC_VERSION_MIN_MACOSX or
-				   LC_VERSION_MIN_IPHONSYS  */
+				   LC_VERSION_MIN_IPHONEOS  */
     uint32_t	cmdsize;	/* sizeof(struct min_version_command) */
     uint32_t	version;	/* X.Y.Z is encoded in nibbles xxxx.yy.zz */
     uint32_t	reserved;	/* zero */
